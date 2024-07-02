@@ -113,7 +113,7 @@ def convert_size(size_bytes):
 
 def measure_speed(url: str, measure_time: int) -> float:
     logging.debug('measure_speed()')
-    url = f'http://{url}/snapshot.tar.bz2'
+    url = f'https://{url}/snapshot.tar.bz2'
     r = requests.get(url, stream=True, timeout=measure_time+2)
     r.raise_for_status()
     start_time = time.monotonic_ns()
@@ -226,8 +226,8 @@ def get_snapshot_slot(rpc_address: str):
     global DISCARDED_BY_SLOT
 
     pbar.update(1)
-    url = f'http://{rpc_address}/snapshot.tar.bz2'
-    inc_url = f'http://{rpc_address}/incremental-snapshot.tar.bz2'
+    url = f'https://{rpc_address}/snapshot.tar.bz2'
+    inc_url = f'https://{rpc_address}/incremental-snapshot.tar.bz2'
     # d = '{"jsonrpc":"2.0","id":1,"method":"getHighestSnapshotSlot"}'
     try:
         r = do_request(url_=inc_url, method_='head', timeout_=1)
@@ -420,14 +420,14 @@ def main_worker():
 
 
                     if 'incremental' in path:
-                        r = do_request(f'http://{rpc_node["snapshot_address"]}/incremental-snapshot.tar.bz2', method_='head', timeout_=2)
+                        r = do_request(f'https://{rpc_node["snapshot_address"]}/incremental-snapshot.tar.bz2', method_='head', timeout_=2)
                         if 'location' in str(r.headers) and 'error' not in str(r.text):
-                            best_snapshot_node = f'http://{rpc_node["snapshot_address"]}{r.headers["location"]}'
+                            best_snapshot_node = f'https://{rpc_node["snapshot_address"]}{r.headers["location"]}'
                         else:
-                            best_snapshot_node = f'http://{rpc_node["snapshot_address"]}{path}'
+                            best_snapshot_node = f'https://{rpc_node["snapshot_address"]}{path}'
 
                     else:
-                        best_snapshot_node = f'http://{rpc_node["snapshot_address"]}{path}'
+                        best_snapshot_node = f'https://{rpc_node["snapshot_address"]}{path}'
                     logger.info(f'Downloading {best_snapshot_node} snapshot to {SNAPSHOT_PATH}')
                     download(url=best_snapshot_node)
                 return 0
