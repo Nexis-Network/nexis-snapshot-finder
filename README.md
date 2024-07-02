@@ -81,7 +81,7 @@ python3 snapshot-finder.py --snapshot_path $HOME/nexis/validator-ledger
 
 TdS  
 ```python
-python3 snapshot-finder.py --snapshot_path $HOME/nexis/validator-ledger -r http://api.testnet.nexis.com
+python3 snapshot-finder.py --snapshot_path $HOME/nexis/validator-ledger -r http://api.devnet.nexis.com
 ``` 
 
 ### Run via docker  
